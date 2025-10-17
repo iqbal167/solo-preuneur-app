@@ -1,4 +1,4 @@
-import { SignInForm } from '@/components/sign-in-form';
+import { SignUpForm } from '@/components/sign-up-form';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Stack } from 'expo-router';
@@ -8,12 +8,12 @@ import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 
 const SCREEN_OPTIONS = {
-  title: 'Login',
+  title: 'Sign Up',
   headerTransparent: true,
   headerRight: () => <ThemeToggle />,
 };
 
-export default function Screen() {
+export default function SignUpScreen() {
   return (
     <>
       <Stack.Screen options={SCREEN_OPTIONS} />
@@ -22,7 +22,7 @@ export default function Screen() {
         contentContainerClassName="sm:flex-1 items-center justify-center p-4 py-8 sm:py-4 sm:p-6 mt-safe"
         keyboardDismissMode="interactive">
         <View className="w-full max-w-sm">
-          <SignInForm />
+          <SignUpForm />
         </View>
       </ScrollView>
     </>
