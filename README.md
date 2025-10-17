@@ -1,73 +1,122 @@
-# Minimal Template
+# Solo Preneur App
 
-This is a [React Native](https://reactnative.dev/) project built with [Expo](https://expo.dev/) and [React Native Reusables](https://reactnativereusables.com).
+A React Native app built with Expo and React Native Reusables for solo entrepreneurs.
 
-It was initialized using the following command:
+## Features
 
-```bash
-npx @react-native-reusables/cli@latest init -t solo-preuneur-app
-```
+- ✅ **Authentication Pages**
+  - Login page with email/password
+  - Sign up page with registration form
+  - Social login (Google & Apple)
+  - Navigation between login/signup
+
+- ⚛️ **Tech Stack**
+  - [Expo Router](https://expo.dev/router) for navigation
+  - [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
+  - [React Native Reusables](https://github.com/founded-labs/react-native-reusables) for UI components
+  - New Architecture enabled
+  - Edge to Edge enabled
+  - Runs on iOS, Android, and Web
 
 ## Getting Started
 
-To run the development server:
+### Prerequisites
+
+- Node.js
+- Expo CLI
+- iOS Simulator (Mac) or Android Emulator
+
+### Installation
 
 ```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
+# Clone the repository
+git clone <repository-url>
+cd solo-preuneur-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-This will start the Expo Dev Server. Open the app in:
-
-- **iOS**: press `i` to launch in the iOS simulator _(Mac only)_
-- **Android**: press `a` to launch in the Android emulator
-- **Web**: press `w` to run in a browser
-
-You can also scan the QR code using the [Expo Go](https://expo.dev/go) app on your device. This project fully supports running in Expo Go for quick testing on physical devices.
-
-## Adding components
-
-You can add more reusable components using the CLI:
+### Available Scripts
 
 ```bash
-npx react-native-reusables/cli@latest add [...components]
+npm run dev          # Start Expo development server
+npm run android      # Start development server (Android focus)
+npm run ios          # Start development server (iOS focus)
+npm run web          # Start development server (Web focus)
 ```
 
-> e.g. `npx react-native-reusables/cli@latest add input textarea`
+### Running the App
 
-If you don't specify any component names, you'll be prompted to select which components to add interactively. Use the `--all` flag to install all available components at once.
+1. **iOS**: Press `i` in terminal or scan QR code with Camera app
+2. **Android**: Press `a` in terminal or scan QR code with Expo Go app
+3. **Web**: Press `w` in terminal or open browser to localhost
 
-## Project Features
+## Project Structure
 
-- ⚛️ Built with [Expo Router](https://expo.dev/router)
-- 🎨 Styled with [Tailwind CSS](https://tailwindcss.com/) via [Nativewind](https://www.nativewind.dev/)
-- 📦 UI powered by [React Native Reusables](https://github.com/founded-labs/react-native-reusables)
-- 🚀 New Architecture enabled
-- 🔥 Edge to Edge enabled
-- 📱 Runs on iOS, Android, and Web
+```
+├── app/                    # App routes (Expo Router)
+│   ├── index.tsx          # Login page (root)
+│   ├── sign-up.tsx        # Sign up page
+│   └── _layout.tsx        # Root layout
+├── components/            # Reusable components
+│   ├── ui/               # UI components (buttons, inputs, etc.)
+│   ├── sign-in-form.tsx  # Login form component
+│   ├── sign-up-form.tsx  # Sign up form component
+│   └── social-connections.tsx # Social login buttons
+└── lib/                  # Utilities and configurations
+```
+
+## Adding Components
+
+Add more reusable components using the CLI:
+
+```bash
+npx @react-native-reusables/cli@latest add [component-name]
+
+# Examples:
+npx @react-native-reusables/cli@latest add input textarea
+npx @react-native-reusables/cli@latest add --all
+```
+
+## Authentication Flow
+
+1. **Login Page** (`/`) - Default landing page
+   - Email/password form
+   - "Forgot password" link
+   - Social login options (Google, Apple)
+   - Link to sign up page
+
+2. **Sign Up Page** (`/sign-up`) - Registration page
+   - Registration form
+   - Social sign up options
+   - Link back to login page
+
+## Deployment
+
+Deploy with [Expo Application Services (EAS)](https://expo.dev/eas):
+
+```bash
+# Build for production
+eas build --platform all
+
+# Submit to app stores
+eas submit --platform all
+
+# Over-the-air updates
+eas update
+```
 
 ## Learn More
-
-To dive deeper into the technologies used:
 
 - [React Native Docs](https://reactnative.dev/docs/getting-started)
 - [Expo Docs](https://docs.expo.dev/)
 - [Nativewind Docs](https://www.nativewind.dev/)
 - [React Native Reusables](https://reactnativereusables.com)
 
-## Deploy with EAS
+## Support
 
-The easiest way to deploy your app is with [Expo Application Services (EAS)](https://expo.dev/eas).
-
-- [EAS Build](https://docs.expo.dev/build/introduction/)
-- [EAS Updates](https://docs.expo.dev/eas-update/introduction/)
-- [EAS Submit](https://docs.expo.dev/submit/introduction/)
-
----
-
-If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables). Your support means a lot!
+If you enjoy using React Native Reusables, please consider giving it a ⭐ on [GitHub](https://github.com/founded-labs/react-native-reusables).
