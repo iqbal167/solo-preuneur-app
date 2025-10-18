@@ -5,19 +5,49 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
+import { authService } from '@/lib/services/auth';
+import { authStorage } from '@/lib/storage/auth';
 import { router } from 'expo-router';
+import { Eye, EyeOff } from 'lucide-react-native';
 import * as React from 'react';
-import { Pressable, type TextInput, View } from 'react-native';
+import { Alert, Pressable, type TextInput, View } from 'react-native';
 
 export function SignInForm() {
+  const [formData, setFormData] = React.useState({
+    email: '',
+    password: '',
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const passwordInputRef = React.useRef<TextInput>(null);
 
   function onEmailSubmitEditing() {
     passwordInputRef.current?.focus();
   }
 
-  function onSubmit() {
-    // TODO: Submit form and navigate to protected screen if successful
+  async function onSubmit() {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const result = await authService.login(formData);
+
+      if (result.success && result.data) {
+        // Save tokens to storage
+        await authStorage.setTokens(result.data.access_token, result.data.refresh_token);
+
+        // Navigate to profile
+        router.replace('/profile');
+      } else {
+        Alert.alert('Error', result.error || 'Login failed');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -39,6 +69,10 @@ export function SignInForm() {
                 keyboardType="email-address"
                 autoComplete="email"
                 autoCapitalize="none"
+                value={formData.email}
+                onChangeText={(text) => {
+                  setFormData((prev) => ({ ...prev, email: text }));
+                }}
                 onSubmitEditing={onEmailSubmitEditing}
                 returnKeyType="next"
                 submitBehavior="submit"
@@ -57,16 +91,32 @@ export function SignInForm() {
                   <Text className="font-normal leading-4">Forgot your password?</Text>
                 </Button>
               </View>
-              <Input
-                ref={passwordInputRef}
-                id="password"
-                secureTextEntry
-                returnKeyType="send"
-                onSubmitEditing={onSubmit}
-              />
+              <View className="relative">
+                <Input
+                  ref={passwordInputRef}
+                  id="password"
+                  secureTextEntry={!showPassword}
+                  value={formData.password}
+                  onChangeText={(text) => {
+                    setFormData((prev) => ({ ...prev, password: text }));
+                  }}
+                  returnKeyType="send"
+                  onSubmitEditing={onSubmit}
+                  className="pr-12"
+                />
+                <Pressable
+                  onPress={() => setShowPassword(!showPassword)}
+                  className="absolute right-0 top-0 h-full w-12 items-center justify-center">
+                  {showPassword ? (
+                    <EyeOff size={20} color="#6b7280" />
+                  ) : (
+                    <Eye size={20} color="#6b7280" />
+                  )}
+                </Pressable>
+              </View>
             </View>
-            <Button className="w-full" onPress={onSubmit}>
-              <Text>Continue</Text>
+            <Button className="w-full" onPress={onSubmit} disabled={isLoading}>
+              <Text>{isLoading ? 'Signing In...' : 'Continue'}</Text>
             </Button>
           </View>
           <Text className="text-center text-sm">
