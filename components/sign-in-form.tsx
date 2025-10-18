@@ -38,8 +38,8 @@ export function SignInForm() {
         // Save tokens to storage
         await authStorage.setTokens(result.data.access_token, result.data.refresh_token);
 
-        // Navigate to profile
-        router.replace('/profile');
+        // Navigate to home
+        router.replace('/home');
       } else {
         Alert.alert('Error', result.error || 'Login failed');
       }
